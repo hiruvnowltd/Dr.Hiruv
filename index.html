@@ -6,516 +6,186 @@
     <title>HIRUV - A/L Student Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d2d2d 100%); 
+            color: #ffffff; 
+            min-height: 100vh; 
         }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d2d2d 100%);
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            padding: 40px 20px; 
+            background: linear-gradient(135deg, rgba(255, 59, 48, 0.15) 0%, rgba(255, 107, 90, 0.1) 100%); 
+            border-radius: 25px; 
+            border: 1px solid rgba(255, 59, 48, 0.3); 
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
+        .header h1 { 
+            font-size: 4rem; 
+            font-weight: 800; 
+            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 50%, #ff9f8a 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text; 
+            margin-bottom: 15px; 
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, rgba(255, 59, 48, 0.15) 0%, rgba(255, 107, 90, 0.1) 100%);
-            border-radius: 25px;
-            border: 1px solid rgba(255, 59, 48, 0.3);
+        .login-container { 
+            max-width: 450px; 
+            margin: 0 auto; 
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, rgba(35, 35, 35, 0.9) 100%); 
+            padding: 50px 40px; 
+            border-radius: 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
         }
-
-        .header h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 50%, #ff9f8a 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
+        .form-group { margin-bottom: 30px; }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 10px; 
+            color: #cccccc; 
+            font-weight: 600; 
+            font-size: 14px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
         }
-
-        .header p {
-            font-size: 1.3rem;
-            color: #cccccc;
+        .form-group input, .form-group select { 
+            width: 100%; 
+            padding: 18px 20px; 
+            border: 2px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 15px; 
+            background: rgba(26, 26, 26, 0.8); 
+            color: #ffffff; 
+            font-size: 16px; 
         }
-
-        .login-container {
-            max-width: 450px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, rgba(35, 35, 35, 0.9) 100%);
-            padding: 50px 40px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .btn { 
+            width: 100%; 
+            padding: 18px; 
+            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%); 
+            color: white; 
+            border: none; 
+            border-radius: 15px; 
+            font-size: 16px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
         }
-
-        .form-group {
-            margin-bottom: 30px;
+        .dashboard { display: none; }
+        .dashboard.active { display: block; }
+        .nav-container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 40px; 
+            flex-wrap: wrap; 
+            gap: 20px; 
         }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: #cccccc;
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .nav-menu { display: flex; gap: 15px; flex-wrap: wrap; }
+        .nav-btn { 
+            padding: 12px 25px; 
+            background: rgba(45, 45, 45, 0.8); 
+            color: #ffffff; 
+            border: 2px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 15px; 
+            cursor: pointer; 
+            font-weight: 600; 
         }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 18px 20px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            background: rgba(26, 26, 26, 0.8);
-            color: #ffffff;
-            font-size: 16px;
-            transition: all 0.4s ease;
+        .nav-btn.active { 
+            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%); 
+            border-color: #ff3b30; 
         }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #ff3b30;
-            box-shadow: 0 0 25px rgba(255, 59, 48, 0.4);
+        .logout-btn { 
+            background: rgba(244, 67, 54, 0.2); 
+            color: #f44336; 
+            border: 2px solid #f44336; 
+            padding: 12px 25px; 
+            border-radius: 15px; 
+            cursor: pointer; 
+            font-weight: 600; 
         }
-
-        .btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .welcome-section { 
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, rgba(35, 35, 35, 0.9) 100%); 
+            padding: 40px; 
+            border-radius: 25px; 
+            margin-bottom: 40px; 
+            text-align: center; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 59, 48, 0.4);
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 30px; 
+            margin-bottom: 40px; 
         }
-
-        .dashboard {
-            display: none;
+        .card { 
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, rgba(35, 35, 35, 0.9) 100%); 
+            padding: 35px; 
+            border-radius: 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
         }
-
-        .dashboard.active {
-            display: block;
+        .card h3 { 
+            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 25px; 
+            font-size: 1.8rem; 
         }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 20px;
+        .countdown-card { text-align: center; }
+        .countdown-timer { 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin: 25px 0; 
         }
-
-        .nav-menu {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+        .subject-page { display: none; }
+        .subject-page.active { display: block; }
+        .poll-container { 
+            background: rgba(35, 35, 35, 0.8); 
+            padding: 25px; 
+            border-radius: 20px; 
+            margin-bottom: 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
         }
-
-        .nav-btn {
-            padding: 12px 25px;
-            background: rgba(45, 45, 45, 0.8);
-            color: #ffffff;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.4s ease;
+        .poll-question { 
+            font-size: 1.2rem; 
+            font-weight: 600; 
+            margin-bottom: 20px; 
+            color: #ffffff; 
         }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%);
-            border-color: #ff3b30;
-            transform: translateY(-2px);
+        .poll-option { 
+            display: block; 
+            width: 100%; 
+            padding: 12px 20px; 
+            margin-bottom: 10px; 
+            background: rgba(45, 45, 45, 0.8); 
+            border: 2px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 10px; 
+            color: #ffffff; 
+            cursor: pointer; 
+            text-align: left; 
         }
-
-        .logout-btn {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-            border: 2px solid #f44336;
-            padding: 12px 25px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.4s ease;
+        .error-alert { 
+            background: rgba(244, 67, 54, 0.2); 
+            color: #f44336; 
+            padding: 18px; 
+            border-radius: 15px; 
+            margin-top: 20px; 
+            border: 1px solid rgba(244, 67, 54, 0.3); 
+            text-align: center; 
+            font-weight: 600; 
         }
-
-        .logout-btn:hover {
-            background: #f44336;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .welcome-section {
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, rgba(35, 35, 35, 0.9) 100%);
-            padding: 40px;
-            border-radius: 25px;
-            margin-bottom: 40px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .welcome-section h2 {
-            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .role-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .card {
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, rgba(35, 35, 35, 0.9) 100%);
-            padding: 35px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .card h3 {
-            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 25px;
-            font-size: 1.8rem;
-        }
-
-        .biology-card {
-            border-left: 4px solid #4CAF50;
-        }
-
-        .chemistry-card {
-            border-left: 4px solid #2196F3;
-        }
-
-        .physics-card {
-            border-left: 4px solid #FF9800;
-        }
-
-        .countdown-card {
-            text-align: center;
-        }
-
-        .countdown-timer {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 25px 0;
-        }
-
-        .countdown-label {
-            font-size: 1rem;
-            color: #cccccc;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-        }
-
-        .subject-page {
-            display: none;
-        }
-
-        .subject-page.active {
-            display: block;
-        }
-
-        .subject-header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 40px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .biology-header {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.1) 100%);
-            border-color: rgba(76, 175, 80, 0.3);
-        }
-
-        .chemistry-header {
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.15) 0%, rgba(33, 150, 243, 0.1) 100%);
-            border-color: rgba(33, 150, 243, 0.3);
-        }
-
-        .physics-header {
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.15) 0%, rgba(255, 152, 0, 0.1) 100%);
-            border-color: rgba(255, 152, 0, 0.3);
-        }
-
-        .subject-title {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .biology-title {
-            background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .chemistry-title {
-            background: linear-gradient(135deg, #2196F3 0%, #42A5F5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .physics-title {
-            background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .admin-section {
-            margin-bottom: 30px;
-        }
-
-        .status-message {
-            padding: 18px;
-            border-radius: 15px;
-            margin-top: 20px;
-            font-weight: 600;
-            text-align: center;
-        }
-
         .status-success {
             background: rgba(76, 175, 80, 0.2);
             color: #4CAF50;
-            border: 1px solid rgba(76, 175, 80, 0.3);
-        }
-
-        .status-error {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-            border: 1px solid rgba(244, 67, 54, 0.3);
-        }
-
-        .poll-container {
-            background: rgba(35, 35, 35, 0.8);
-            padding: 25px;
-            border-radius: 20px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .poll-question {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-
-        .poll-option {
-            display: block;
-            width: 100%;
-            padding: 12px 20px;
-            margin-bottom: 10px;
-            background: rgba(45, 45, 45, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-        }
-
-        .poll-option:hover {
-            border-color: #ff3b30;
-            background: rgba(255, 59, 48, 0.1);
-        }
-
-        .error-alert {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
             padding: 18px;
             border-radius: 15px;
             margin-top: 20px;
-            border: 1px solid rgba(244, 67, 54, 0.3);
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .language-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
-
-        .theme-btn, .lang-btn {
-            padding: 8px 16px;
-            background: rgba(45, 45, 45, 0.8);
-            color: #ffffff;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .lang-btn:hover, .lang-btn.active {
-            background: linear-gradient(135deg, #ff3b30 0%, #ff6b5a 100%);
-            border-color: #ff3b30;
-        }
-
-        body.red-theme {
-            background: linear-gradient(135deg, #1a0000 0%, #330000 50%, #4d0000 100%);
-        }
-
-        .mcq-item {
-            background: rgba(26, 26, 26, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-        }
-
-        .mcq-question {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 15px;
-        }
-
-        .mcq-options {
-            display: grid;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .mcq-option {
-            padding: 8px 12px;
-            background: rgba(45, 45, 45, 0.6);
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: #cccccc;
-        }
-
-        .mcq-option.correct {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
             border: 1px solid rgba(76, 175, 80, 0.3);
-        }
-
-        .mcq-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-        }
-
-        .mcq-timestamp {
-            font-size: 0.8rem;
-            color: #888888;
-        }
-
-        .delete-btn {
-            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .delete-btn:hover {
-            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
-            transform: translateY(-2px);
-        }
-
-        .no-mcqs {
             text-align: center;
-            color: #888888;
-            padding: 40px 20px;
-            font-style: italic;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .login-container {
-                padding: 30px 25px;
-                margin: 0 10px;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .card {
-                padding: 25px;
-            }
-
-            .nav-container {
-                flex-direction: column;
-            }
-
-            .nav-menu {
-                justify-content: center;
-            }
+            font-weight: 600;
         }
     </style>
 </head>
@@ -523,15 +193,8 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="theme-toggle">
-                <button class="theme-btn" onclick="toggleTheme()">🎨 Theme</button>
-            </div>
-            <div class="language-toggle">
-                <button class="lang-btn active" onclick="setLanguage('en')">English</button>
-                <button class="lang-btn" onclick="setLanguage('si')">සිංහල</button>
-            </div>
             <h1>Dr.HIRUV</h1>
-            <p data-en="Advanced Level Student Dashboard" data-si="උසස් පෙළ ශිෂ්‍ය පුවරුව">Advanced Level Student Dashboard</p>
+            <p>Advanced Level Student Dashboard</p>
         </div>
 
         <!-- Login Section -->
@@ -565,24 +228,24 @@
             <!-- Main Dashboard View -->
             <div id="dashboardView">
                 <div class="welcome-section">
-                    <h2>Welcome, Hiruv!</h2>
+                    <h2>Welcome, Student!</h2>
                     <span class="role-badge">Student</span>
                 </div>
 
                 <div class="grid">
-                    <div class="card countdown-card biology-card">
+                    <div class="card countdown-card">
                         <h3>🧬 Biology Exam</h3>
                         <div class="countdown-timer" id="biologyCountdown">Loading...</div>
                         <div class="countdown-label">Time Remaining</div>
                     </div>
 
-                    <div class="card countdown-card chemistry-card">
+                    <div class="card countdown-card">
                         <h3>⚗️ Chemistry Exam</h3>
                         <div class="countdown-timer" id="chemistryCountdown">Loading...</div>
                         <div class="countdown-label">Time Remaining</div>
                     </div>
 
-                    <div class="card countdown-card physics-card">
+                    <div class="card countdown-card">
                         <h3>⚡ Physics Exam</h3>
                         <div class="countdown-timer" id="physicsCountdown">Loading...</div>
                         <div class="countdown-label">Time Remaining</div>
@@ -592,8 +255,8 @@
 
             <!-- Subject Pages -->
             <div id="biologyPage" class="subject-page">
-                <div class="subject-header biology-header">
-                    <h2 class="subject-title biology-title">🧬 Biology</h2>
+                <div class="subject-header">
+                    <h2 class="subject-title">🧬 Biology</h2>
                     <p>Explore the fascinating world of life sciences</p>
                 </div>
                 <div class="grid">
@@ -605,8 +268,8 @@
             </div>
 
             <div id="chemistryPage" class="subject-page">
-                <div class="subject-header chemistry-header">
-                    <h2 class="subject-title chemistry-title">⚗️ Chemistry</h2>
+                <div class="subject-header">
+                    <h2 class="subject-title">⚗️ Chemistry</h2>
                     <p>Discover the building blocks of matter</p>
                 </div>
                 <div class="grid">
@@ -618,8 +281,8 @@
             </div>
 
             <div id="physicsPage" class="subject-page">
-                <div class="subject-header physics-header">
-                    <h2 class="subject-title physics-title">⚡ Physics</h2>
+                <div class="subject-header">
+                    <h2 class="subject-title">⚡ Physics</h2>
                     <p>Understand the fundamental laws of the universe</p>
                 </div>
                 <div class="grid">
@@ -646,7 +309,7 @@
             <!-- Admin Main Dashboard -->
             <div id="adminDashboardView">
                 <div class="welcome-section">
-                    <h2>Welcome, Vihanga!</h2>
+                    <h2>Welcome, Admin!</h2>
                     <span class="role-badge">Admin</span>
                 </div>
 
@@ -669,19 +332,19 @@
                         <div id="dateUpdateStatus"></div>
                     </div>
 
-                    <div class="card countdown-card biology-card">
+                    <div class="card countdown-card">
                         <h3>🧬 Biology Exam</h3>
                         <div class="countdown-timer" id="adminBiologyCountdown">Loading...</div>
                         <div class="countdown-label">Time Remaining</div>
                     </div>
 
-                    <div class="card countdown-card chemistry-card">
+                    <div class="card countdown-card">
                         <h3>⚗️ Chemistry Exam</h3>
                         <div class="countdown-timer" id="adminChemistryCountdown">Loading...</div>
                         <div class="countdown-label">Time Remaining</div>
                     </div>
 
-                    <div class="card countdown-card physics-card">
+                    <div class="card countdown-card">
                         <h3>⚡ Physics Exam</h3>
                         <div class="countdown-timer" id="adminPhysicsCountdown">Loading...</div>
                         <div class="countdown-label">Time Remaining</div>
@@ -691,8 +354,8 @@
 
             <!-- Admin Subject Pages -->
             <div id="adminBiologyPage" class="subject-page">
-                <div class="subject-header biology-header">
-                    <h2 class="subject-title biology-title">🧬 Biology - Admin Panel</h2>
+                <div class="subject-header">
+                    <h2 class="subject-title">🧬 Biology - Admin Panel</h2>
                     <p>Manage Biology content and polls</p>
                 </div>
                 <div class="grid">
@@ -743,8 +406,8 @@
             </div>
 
             <div id="adminChemistryPage" class="subject-page">
-                <div class="subject-header chemistry-header">
-                    <h2 class="subject-title chemistry-title">⚗️ Chemistry - Admin Panel</h2>
+                <div class="subject-header">
+                    <h2 class="subject-title">⚗️ Chemistry - Admin Panel</h2>
                     <p>Manage Chemistry content and polls</p>
                 </div>
                 <div class="grid">
@@ -795,8 +458,8 @@
             </div>
 
             <div id="adminPhysicsPage" class="subject-page">
-                <div class="subject-header physics-header">
-                    <h2 class="subject-title physics-title">⚡ Physics - Admin Panel</h2>
+                <div class="subject-header">
+                    <h2 class="subject-title">⚡ Physics - Admin Panel</h2>
                     <p>Manage Physics content and polls</p>
                 </div>
                 <div class="grid">
@@ -849,46 +512,63 @@
     </div>
 
     <script>
-        // Simple Firebase simulation for demo
-        const firebaseDB = {
-            data: {
-                examDates: null,
-                biologyPolls: [],
-                chemistryPolls: [],
-                physicsPolls: []
-            },
-            
-            setItem: async function(key, value) {
-                this.data[key] = value;
-                localStorage.setItem(key, JSON.stringify(value));
-                return true;
-            },
-            
-            getItem: async function(key) {
-                const localData = localStorage.getItem(key);
-                if (localData) {
-                    return JSON.parse(localData);
+        // Sample MCQ Data - This will work without Firebase
+        const sampleMCQs = {
+            biology: [
+                {
+                    id: 1,
+                    question: "මානව හදවතේ කුලුණු කීයක් තිබේද?",
+                    options: {
+                        A: "2",
+                        B: "3", 
+                        C: "4",
+                        D: "5",
+                        E: "6"
+                    },
+                    correctAnswer: "C"
+                },
+                {
+                    id: 2,
+                    question: "DNA හි සම්පූර්ණ නම කුමක්ද?",
+                    options: {
+                        A: "Deoxy Nucleic Acid",
+                        B: "Deoxyribose Nucleotide Acid",
+                        C: "Deoxyribonucleic Acid", 
+                        D: "Deoxide Nucleic Acid",
+                        E: "Deoxyribose Nucleic Acid"
+                    },
+                    correctAnswer: "C"
                 }
-                return this.data[key];
-            },
-            
-            removeItem: async function(key) {
-                this.data[key] = null;
-                localStorage.removeItem(key);
-                return true;
-            },
-            
-            onItemChange: function(key, callback) {
-                // Simple simulation for real-time updates
-                setInterval(() => {
-                    const data = this.data[key];
-                    callback(data);
-                }, 1000);
-            }
+            ],
+            chemistry: [
+                {
+                    id: 1,
+                    question: "පරමාණුක අංකය යනු කුමක්ද?",
+                    options: {
+                        A: "නියුට්රෝන සංඛ්‍යාව",
+                        B: "ප්‍රෝටෝන සංඛ්‍යාව",
+                        C: "ඉලෙක්ට්‍රෝන සංඛ්‍යාව",
+                        D: "ස්කන්ධ අංකය", 
+                        E: "සියලුම අංශු සංඛ්‍යාව"
+                    },
+                    correctAnswer: "B"
+                }
+            ],
+            physics: [
+                {
+                    id: 1,
+                    question: "ගුරුත්වාකර්ෂණ ත්වරණය පොළොව මතුපිට සාමාන්‍යයෙන් කීයද?",
+                    options: {
+                        A: "8.9 m/s²",
+                        B: "9.8 m/s²",
+                        C: "10.2 m/s²", 
+                        D: "7.6 m/s²",
+                        E: "11.4 m/s²"
+                    },
+                    correctAnswer: "B"
+                }
+            ]
         };
-
-        // Make available globally
-        window.firebaseDB = firebaseDB;
 
         // User credentials
         const users = {
@@ -904,7 +584,6 @@
         };
 
         let currentUser = null;
-        let currentLanguage = 'en';
 
         // Initialize app when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
@@ -918,15 +597,14 @@
                 loginForm.addEventListener('submit', handleLogin);
             }
             
-            // Load preferences
-            loadLanguagePreference();
-            loadThemePreference();
-            
             // Show login section
             document.getElementById('loginSection').style.display = 'block';
+            
+            // Load any saved exam dates
+            loadExamDates();
         }
 
-        async function handleLogin(e) {
+        function handleLogin(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
@@ -936,6 +614,7 @@
                 currentUser = { username, role: users[username].role };
                 
                 document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('errorMessage').innerHTML = '';
                 
                 if (currentUser.role === 'admin') {
                     document.getElementById('adminDashboard').classList.add('active');
@@ -945,8 +624,6 @@
                     loadStudentDashboard();
                 }
                 
-                document.getElementById('errorMessage').innerHTML = '';
-                await loadExamDates();
                 startCountdowns();
                 
             } else {
@@ -1032,17 +709,18 @@
             loadCurrentExamDates();
         }
 
-        async function loadExamDates() {
-            const saved = await firebaseDB.getItem('examDates');
+        function loadExamDates() {
+            const saved = localStorage.getItem('examDates');
             if (saved) {
-                examDates.biology = new Date(saved.biology);
-                examDates.chemistry = new Date(saved.chemistry);
-                examDates.physics = new Date(saved.physics);
+                const dates = JSON.parse(saved);
+                examDates.biology = new Date(dates.biology);
+                examDates.chemistry = new Date(dates.chemistry);
+                examDates.physics = new Date(dates.physics);
             }
         }
 
-        async function saveExamDates() {
-            await firebaseDB.setItem('examDates', examDates);
+        function saveExamDates() {
+            localStorage.setItem('examDates', JSON.stringify(examDates));
         }
 
         function loadCurrentExamDates() {
@@ -1061,14 +739,14 @@
             return date.toISOString().slice(0, 16);
         }
 
-        async function updateExamDates() {
+        function updateExamDates() {
             const biologyDate = document.getElementById('biologyDate').value;
             const chemistryDate = document.getElementById('chemistryDate').value;
             const physicsDate = document.getElementById('physicsDate').value;
             const statusDiv = document.getElementById('dateUpdateStatus');
             
             if (!biologyDate || !chemistryDate || !physicsDate) {
-                statusDiv.innerHTML = '<div class="status-error">Please select dates for all subjects.</div>';
+                statusDiv.innerHTML = '<div class="error-alert">Please select dates for all subjects.</div>';
                 return;
             }
             
@@ -1076,7 +754,7 @@
             examDates.chemistry = new Date(chemistryDate);
             examDates.physics = new Date(physicsDate);
             
-            await saveExamDates();
+            saveExamDates();
             statusDiv.innerHTML = '<div class="status-success">Exam dates updated successfully!</div>';
             
             setTimeout(() => {
@@ -1116,64 +794,15 @@
             window.countdownInterval = setInterval(updateCountdowns, 1000);
         }
 
-        async function addMCQ(subject) {
-            const question = document.getElementById(`${subject}Question`).value;
-            const optionA = document.getElementById(`${subject}OptionA`).value;
-            const optionB = document.getElementById(`${subject}OptionB`).value;
-            const optionC = document.getElementById(`${subject}OptionC`).value;
-            const optionD = document.getElementById(`${subject}OptionD`).value;
-            const optionE = document.getElementById(`${subject}OptionE`).value;
-            const correctAnswer = document.getElementById(`${subject}CorrectAnswer`).value;
-            const statusDiv = document.getElementById(`${subject}McqStatus`);
-            
-            if (!question || !optionA || !optionB || !optionC || !optionD || !optionE) {
-                statusDiv.innerHTML = '<div class="status-error">Please fill in all fields.</div>';
-                return;
-            }
-            
-            const mcq = {
-                id: Date.now(),
-                question,
-                options: { A: optionA, B: optionB, C: optionC, D: optionD, E: optionE },
-                correctAnswer,
-                timestamp: new Date().toISOString()
-            };
-            
-            try {
-                const existingPolls = await firebaseDB.getItem(`${subject}Polls`) || [];
-                const polls = Array.isArray(existingPolls) ? existingPolls : [];
-                polls.push(mcq);
-                await firebaseDB.setItem(`${subject}Polls`, polls);
-                
-                statusDiv.innerHTML = '<div class="status-success">MCQ poll added successfully!</div>';
-                
-                // Clear form
-                document.getElementById(`${subject}Question`).value = '';
-                document.getElementById(`${subject}OptionA`).value = '';
-                document.getElementById(`${subject}OptionB`).value = '';
-                document.getElementById(`${subject}OptionC`).value = '';
-                document.getElementById(`${subject}OptionD`).value = '';
-                document.getElementById(`${subject}OptionE`).value = '';
-                document.getElementById(`${subject}CorrectAnswer`).value = 'A';
-                
-                if (currentUser && currentUser.role === 'admin') {
-                    loadAdminMCQs(subject);
-                }
-                
-                setTimeout(() => {
-                    statusDiv.innerHTML = '';
-                }, 3000);
-            } catch (error) {
-                statusDiv.innerHTML = '<div class="status-error">Error adding MCQ. Please try again.</div>';
-            }
-        }
-
-        async function loadPolls(subject) {
+        // Load polls for students
+        function loadPolls(subject) {
             const pollsContainer = document.getElementById(`${subject}Polls`);
-            const polls = await firebaseDB.getItem(`${subject}Polls`) || [];
+            
+            // Use sample MCQs if no Firebase data
+            const polls = sampleMCQs[subject] || [];
             
             if (polls.length === 0) {
-                pollsContainer.innerHTML = '<p style="color: #cccccc; text-align: center; padding: 20px;">No polls available yet.</p>';
+                pollsContainer.innerHTML = '<p style="color: #cccccc; text-align: center; padding: 20px;">No questions available yet. Check back later!</p>';
                 return;
             }
             
@@ -1222,9 +851,43 @@
             }
         }
 
-        async function loadAdminMCQs(subject) {
+        // Admin functions
+        function addMCQ(subject) {
+            const question = document.getElementById(`${subject}Question`).value;
+            const optionA = document.getElementById(`${subject}OptionA`).value;
+            const optionB = document.getElementById(`${subject}OptionB`).value;
+            const optionC = document.getElementById(`${subject}OptionC`).value;
+            const optionD = document.getElementById(`${subject}OptionD`).value;
+            const optionE = document.getElementById(`${subject}OptionE`).value;
+            const correctAnswer = document.getElementById(`${subject}CorrectAnswer`).value;
+            const statusDiv = document.getElementById(`${subject}McqStatus`);
+            
+            if (!question || !optionA || !optionB || !optionC || !optionD || !optionE) {
+                statusDiv.innerHTML = '<div class="error-alert">Please fill in all fields.</div>';
+                return;
+            }
+            
+            // For demo purposes, we'll just show success message
+            // In real app, this would save to Firebase
+            statusDiv.innerHTML = '<div class="status-success">MCQ added successfully! (Demo mode - would save to database in real app)</div>';
+            
+            // Clear form
+            document.getElementById(`${subject}Question`).value = '';
+            document.getElementById(`${subject}OptionA`).value = '';
+            document.getElementById(`${subject}OptionB`).value = '';
+            document.getElementById(`${subject}OptionC`).value = '';
+            document.getElementById(`${subject}OptionD`).value = '';
+            document.getElementById(`${subject}OptionE`).value = '';
+            document.getElementById(`${subject}CorrectAnswer`).value = 'A';
+            
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        function loadAdminMCQs(subject) {
             const mcqListContainer = document.getElementById(`${subject}McqList`);
-            const polls = await firebaseDB.getItem(`${subject}Polls`) || [];
+            const polls = sampleMCQs[subject] || [];
             
             if (polls.length === 0) {
                 mcqListContainer.innerHTML = '<div class="no-mcqs">No MCQs created yet. Add your first MCQ above!</div>';
@@ -1233,76 +896,25 @@
             
             let mcqHTML = '';
             polls.forEach((poll, index) => {
-                const timestamp = new Date(poll.timestamp).toLocaleString();
                 mcqHTML += `
-                    <div class="mcq-item">
-                        <div class="mcq-question">${index + 1}. ${poll.question}</div>
-                        <div class="mcq-options">
-                            <div class="mcq-option ${poll.correctAnswer === 'A' ? 'correct' : ''}">A) ${poll.options.A}</div>
-                            <div class="mcq-option ${poll.correctAnswer === 'B' ? 'correct' : ''}">B) ${poll.options.B}</div>
-                            <div class="mcq-option ${poll.correctAnswer === 'C' ? 'correct' : ''}">C) ${poll.options.C}</div>
-                            <div class="mcq-option ${poll.correctAnswer === 'D' ? 'correct' : ''}">D) ${poll.options.D}</div>
-                            <div class="mcq-option ${poll.correctAnswer === 'E' ? 'correct' : ''}">E) ${poll.options.E}</div>
+                    <div style="background: rgba(26,26,26,0.8); padding: 20px; border-radius: 15px; margin-bottom: 15px;">
+                        <div style="font-weight: 600; margin-bottom: 15px;">${index + 1}. ${poll.question}</div>
+                        <div style="display: grid; gap: 8px; margin-bottom: 15px;">
+                            <div style="padding: 8px 12px; background: rgba(45,45,45,0.6); border-radius: 8px;">A) ${poll.options.A}</div>
+                            <div style="padding: 8px 12px; background: rgba(45,45,45,0.6); border-radius: 8px;">B) ${poll.options.B}</div>
+                            <div style="padding: 8px 12px; background: rgba(45,45,45,0.6); border-radius: 8px;">C) ${poll.options.C}</div>
+                            <div style="padding: 8px 12px; background: rgba(45,45,45,0.6); border-radius: 8px;">D) ${poll.options.D}</div>
+                            <div style="padding: 8px 12px; background: rgba(45,45,45,0.6); border-radius: 8px;">E) ${poll.options.E}</div>
                         </div>
-                        <div class="mcq-actions">
-                            <span class="mcq-timestamp">Created: ${timestamp}</span>
-                            <button class="delete-btn" onclick="deleteMCQ('${subject}', ${poll.id})">🗑️ Delete</button>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #888; font-size: 0.8rem;">Correct Answer: ${poll.correctAnswer}</span>
+                            <button style="background: #f44336; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Delete</button>
                         </div>
                     </div>
                 `;
             });
             
             mcqListContainer.innerHTML = mcqHTML;
-        }
-
-        async function deleteMCQ(subject, mcqId) {
-            if (!confirm('Are you sure you want to delete this MCQ?')) {
-                return;
-            }
-            
-            try {
-                const polls = await firebaseDB.getItem(`${subject}Polls`) || [];
-                const updatedPolls = polls.filter(poll => poll.id !== mcqId);
-                await firebaseDB.setItem(`${subject}Polls`, updatedPolls);
-                loadAdminMCQs(subject);
-                
-                const statusDiv = document.getElementById(`${subject}McqStatus`);
-                statusDiv.innerHTML = '<div class="status-success">MCQ deleted successfully!</div>';
-                
-                setTimeout(() => {
-                    statusDiv.innerHTML = '';
-                }, 3000);
-            } catch (error) {
-                const statusDiv = document.getElementById(`${subject}McqStatus`);
-                statusDiv.innerHTML = '<div class="status-error">Error deleting MCQ.</div>';
-            }
-        }
-
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`[onclick="setLanguage('${lang}')"]`).classList.add('active');
-            localStorage.setItem('preferredLanguage', lang);
-        }
-
-        function loadLanguagePreference() {
-            const savedLang = localStorage.getItem('preferredLanguage');
-            if (savedLang) {
-                setLanguage(savedLang);
-            }
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('red-theme');
-            localStorage.setItem('preferredTheme', document.body.classList.contains('red-theme') ? 'red' : 'default');
-        }
-
-        function loadThemePreference() {
-            if (localStorage.getItem('preferredTheme') === 'red') {
-                document.body.classList.add('red-theme');
-            }
         }
     </script>
 </body>
